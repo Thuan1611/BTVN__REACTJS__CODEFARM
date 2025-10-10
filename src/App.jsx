@@ -16,7 +16,7 @@ function App() {
   const fetchData = async () => {
     const respone = await axios.get(
       `${url}?q=${searchValue || ""}&_limit=${limit}&_page=${page}&_sort=${
-        sort || "id"
+        sort || "name"
       }&_order=${order || "desc"}`
     );
     setProducts(respone.data);
@@ -50,7 +50,7 @@ function App() {
               className="bg-indigo-600 text-white rounded-lg "
               onChange={(e) => handleSort(e.target.value)}
             >
-              <option value="id desc"></option>
+              <option value="name desc">Mặc định</option>
               <option value="priority desc">Priority (Giảm dần)</option>
               <option value="priority asc">Priority (Tăng dần)</option>
             </select>
