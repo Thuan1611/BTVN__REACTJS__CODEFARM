@@ -20,8 +20,8 @@ const Tbody = ({ products }) => {
   
   return (
     <tbody className="text-gray-700">
-      {products?.data?.length > 0 ? (
-        products?.data?.map((item) => {
+      {products?.length > 0 ? (
+        products?.map((item) => {
           return (
             <tr key={item._id}>
               <td className="py-4 px-6">{item.name}</td>
