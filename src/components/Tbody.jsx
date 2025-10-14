@@ -1,23 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { handleCompleted, handlePriority } from "../ultils/handlePriority";
 
 const Tbody = ({ products }) => {
   //Completed: Quá hạn
-  const handleCompleted = (item) => {
-    const today = Date.now();
-    const dueDate = new Date(item.dueDate);
-    const isCheckCompleted = !item.completed && today > dueDate;
-    if (item.completed) return "Hoàn thành";
-    if (isCheckCompleted) return "Quá Hạn";
-    return "Chưa hoàn thành ";
-  };
-
-  //CheckPriority
-  const handlePriority = (priority) => {
-    if (Number(priority) === 1) return "Thấp";
-    if (Number(priority) === 2) return "Bình thường";
-    return "Khẩn cấp";
-  };
-  
   return (
     <tbody className="text-gray-700">
       {products?.length > 0 ? (
@@ -30,10 +16,13 @@ const Tbody = ({ products }) => {
               <td className="py-4 px-6">{handlePriority(item.priority)}</td>
               <td className="py-4 px-6">{item.dueDate.slice(0, 10)}</td>
               <td className="py-4 px-6 flex gap-2 ">
-                <button className="px-4 py-1.5 button-primary rounded-full ">
+                <button className="px-4 py-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 shadow-md hover:shadow-lg font-medium">
                   Sửa
                 </button>
-                <button className="px-4 py-1.5 bg-red-500 text-white rounded-full transition hover:bg-indigo-600 duration-200 shadow-sm">
+                <button className="px-4 py-1.5 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition duration-200 shadow-md hover:shadow-lg font-medium">
+                  <Link to={`${item._id}`}> Chi tiết</Link>
+                </button>
+                <button className="px-4 py-1.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200 shadow-md hover:shadow-lg font-medium">
                   Xóa
                 </button>
               </td>

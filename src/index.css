@@ -7,8 +7,9 @@
   .button-primary:hover {
     @apply bg-red-600 transition duration-200 shadow-sm;
   }
-  .th {
-    @apply py-4 px-6 text-center font-semibold text-sm uppercase tracking-wider;
-  }
-  
+}
+@utility flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { fetchData } from "../axios/ListProducts";
-import { Space, Table, Input, Button, ConfigProvider, Select } from "antd";
 import { handleCompleted, handlePriority } from "../ultils/handlePriority";
-import { Link } from "react-router-dom";
-const { Search } = Input;
-const TodosList = () => {
-  const [products, setProducts] = useState([]);
-  const [meta, setMeta] = useState(null);
-  const [searchValue, setSearchValue] = useState("");
+import { Pagination, Select, Space, Table } from "antd";
+import PagiNation from "../components/PagiNation";
+import Search from "antd/es/transfer/search";
+
+const ImportantTodos = () => {
+  const [searchValue,setSearchValue] = useState("")
+  const [products, setProducts] = useState(null);
   const [query, setQuery] = useState({
     _page: 1,
     _limit: 10,
@@ -15,26 +15,22 @@ const TodosList = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      const respone = await fetchData(query);
-      setProducts(respone?.data);
-      setMeta(respone?.meta);
+      const data = await fetchData(query);
+      setProducts(data);
     };
     loadData();
   }, [query]);
 
+  const productsDetail = products?.data?.filter((item) => item.priority === 3);
+
   const columns = [
-    {
-      title: "Index",
-      render: (_, __, index) => index + 1,
-      key: "Index",
-    },
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Completed",
+      title: "completed",
       render: (_, record) => handleCompleted(record),
       key: "completed",
     },
@@ -53,22 +49,8 @@ const TodosList = () => {
       render: (_, record) => record.dueDate.slice(0, 10),
       key: "dueDate",
     },
-    {
-      title: "Actions",
-      render: (_, record) => (
-        <Space>
-          <Button type="primary">Sửa</Button>
-          <Button type="primary" danger>
-            Xóa
-          </Button>
-          <Button type="primary" variant="filled" color="pink">
-            <Link to={`${record._id}`}>Chi tiet</Link>
-          </Button>
-        </Space>
-      ),
-    },
   ];
-  
+
   return (
     <div>
       <Space wrap style={{ marginBottom: 20 }}>
@@ -95,35 +77,14 @@ const TodosList = () => {
           ]}
         />
       </Space>
-
-      <ConfigProvider
-        theme={{
-          components: {
-            Table: {
-              headerBg: "#4f39f6",
-              headerColor: "#FFF",
-            },
-          },
-        }}
-      >
-        <Table
-          rowKey={(record) => record._id}
-          dataSource={products}
-          columns={columns}
-          pagination={{
-            current: query._page,
-            pageSize: query._limit,
-            total: meta?.total,
-            onChange: (page, pageSize) => {
-              setQuery({ ...query, _page: page, _limit: pageSize });
-            },
-            showQuickJumper: true,
-            showSizeChanger: true,
-          }}
-        />
-      </ConfigProvider>
+      <Table
+        rowKey={(record) => record._id}
+        dataSource={productsDetail}
+        columns={columns}
+        // pagination={{ current: query._page ,pageSize: query._limit}}
+      />
     </div>
   );
 };
 
-export default TodosList;
+export default ImportantTodos;

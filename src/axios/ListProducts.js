@@ -8,3 +8,9 @@ export const fetchData = async (query) => {
   const data = await respone.json();
   return data;
 };
+
+export const fetchDataDetail = async (id) => {
+  const respone = await fetch(`${url}/${id}`);
+  const data = await respone.json();
+  return data;
+};

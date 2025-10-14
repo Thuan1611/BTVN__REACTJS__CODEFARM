@@ -14,7 +14,7 @@ const PagiNation = ({ meta, query, setQuery }) => {
       >
         Prev
       </button>
-      <div>
+      <div className="px-4 py-2 font-medium text-gray-700">
         {meta?.page}/{meta?.totalPages}
       </div>
       <button

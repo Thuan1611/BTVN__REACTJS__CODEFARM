@@ -3,7 +3,8 @@ import ClientLayout from "../layouts/LayoutClient";
 import { Navigate } from "react-router-dom";
 import Tbody from "../components/Tbody";
 import TodosList from "../pages/TodosList";
-import TodoImportant from "../components/TodoImportant";
+import ImportantTodos from "../pages/ImportantTodos";
+import DetailTodos from "../pages/DetailTodos";
 
 const clientRoutes = [
     {
@@ -12,8 +13,8 @@ const clientRoutes = [
         children: [
             {index: true, element: <Navigate to="todos"/>},
             {path: "todos",Component: TodosList},
-            // {path: "todos/:id",Component: <Tbody/>},
-            {path: "important",Component: TodoImportant}
+            {path: "todos/:id",Component:DetailTodos},
+            {path: "important",Component: ImportantTodos}
         ]
     }
 ]
