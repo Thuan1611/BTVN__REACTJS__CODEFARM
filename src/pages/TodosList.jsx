@@ -110,8 +110,13 @@ const TodosList = () => {
             const valueDate = dataToday.toISOString().slice(0, 10);
             const [task, done] = e.target.value.split(" ");
 
-            if (task === `quaHan`) {
-              setQuery({ ...query, completed: done, dueDate_lte: valueDate ,dueDate_gte: false});
+            if (task === "quaHan") {
+              setQuery({
+                ...query,
+                completed: done,
+                dueDate_lte: valueDate,
+                dueDate_gte: false,
+              });
             }
             if (task === "noDone") {
               setQuery({
@@ -131,9 +136,9 @@ const TodosList = () => {
             }
           }}
         >
-          <option value={`quaHan false`}>Quá hạn</option>
-          <option value={"done true"}>Hoàn thành</option>
-          <option value={"noDone false"}>Chưa hoàn thành</option>
+          <option value="quaHan false">Quá hạn</option>
+          <option value="done true">Hoàn thành</option>
+          <option value="noDone false">Chưa hoàn thành</option>
         </select>
       </Space>
       <Table
