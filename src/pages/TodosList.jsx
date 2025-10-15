@@ -111,13 +111,23 @@ const TodosList = () => {
             const [task, done] = e.target.value.split(" ");
 
             if (task === `quaHan`) {
-              setQuery({ ...query, completed: done, dueDate_lte: valueDate });
+              setQuery({ ...query, completed: done, dueDate_lte: valueDate ,dueDate_gte: false});
             }
             if (task === "noDone") {
-              setQuery({ ...query, completed: done, dueDate_gte: valueDate, dueDate_lte: false });
+              setQuery({
+                ...query,
+                completed: done,
+                dueDate_gte: valueDate,
+                dueDate_lte: false,
+              });
             }
-             if (task === "done") {
-              setQuery({ ...query, completed: done, dueDate_gte: false, dueDate_lte: false });
+            if (task === "done") {
+              setQuery({
+                ...query,
+                completed: done,
+                dueDate_gte: false,
+                dueDate_lte: false,
+              });
             }
           }}
         >
@@ -130,17 +140,7 @@ const TodosList = () => {
         rowKey={(record) => record._id}
         dataSource={products}
         columns={columns}
-        // pagination={{
-        //   current: query._page,
-        //   pageSize: query._limit,
-        //   total: meta?.total,
-        //   onChange: (page, pageSize) => {
-        //     setQuery({ ...query, _page: page, _limit: pageSize });
-        //   },
-        //   showQuickJumper: true,
-        //   showSizeChanger: true,
-        // }}
-      />
+      ></Table>
       <PagiNation meta={meta} query={query} setQuery={setQuery} />
     </div>
   );
