@@ -109,7 +109,6 @@ const TodosList = () => {
             dataToday.setDate(dataToday.getDate() + 1);
             const valueDate = dataToday.toISOString().slice(0, 10);
             const [task, done] = e.target.value.split(" ");
-
             if (task === "quaHan") {
               setQuery({
                 ...query,
