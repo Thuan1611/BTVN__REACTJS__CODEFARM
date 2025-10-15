@@ -3,6 +3,7 @@ import { fetchData } from "../axios/ListProducts";
 import { Space, Table, Input, Button, ConfigProvider, Select } from "antd";
 import { handleCompleted, handlePriority } from "../ultils/handlePriority";
 import { Link } from "react-router-dom";
+import PagiNation from "../components/PagiNation";
 const { Search } = Input;
 const TodosList = () => {
   const [products, setProducts] = useState([]);
@@ -21,7 +22,7 @@ const TodosList = () => {
     };
     loadData();
   }, [query]);
-
+  // console.log(products)
   const columns = [
     {
       title: "Index",
@@ -68,7 +69,7 @@ const TodosList = () => {
       ),
     },
   ];
-  
+
   return (
     <div>
       <Space wrap style={{ marginBottom: 20 }}>
@@ -85,43 +86,62 @@ const TodosList = () => {
           defaultValue="id desc"
           style={{ width: 120 }}
           onChange={(e) => {
-            const [sort, order] = e.split(" ");
-            setQuery({ ...query, _sort: sort, _order: order });
+            const [sort, order, _gte] = e.split(" ");
+            setQuery({
+              ...query,
+              _sort: sort,
+              _order: order,
+              priority_gte: _gte || null,
+            });
           }}
           options={[
             { value: "id desc", label: "Mặc định" },
-            { value: "priority desc", label: "Priority(Giảm dần)" },
+            { value: "id desc 3", label: "Khẩn cấp" },
+            { value: "priority desc ", label: "Priority(Giảm dần)" },
             { value: "priority asc", label: "Priority(Tăng dần)" },
           ]}
         />
-      </Space>
+        <select
+          name=""
+          id=""
+          onChange={(e) => {
+            const dataToday = new Date();
+            dataToday.setDate(dataToday.getDate() + 1);
+            const valueDate = dataToday.toISOString().slice(0, 10);
+            const [task, done] = e.target.value.split(" ");
 
-      <ConfigProvider
-        theme={{
-          components: {
-            Table: {
-              headerBg: "#4f39f6",
-              headerColor: "#FFF",
-            },
-          },
-        }}
-      >
-        <Table
-          rowKey={(record) => record._id}
-          dataSource={products}
-          columns={columns}
-          pagination={{
-            current: query._page,
-            pageSize: query._limit,
-            total: meta?.total,
-            onChange: (page, pageSize) => {
-              setQuery({ ...query, _page: page, _limit: pageSize });
-            },
-            showQuickJumper: true,
-            showSizeChanger: true,
+            if (task === `quaHan`) {
+              setQuery({ ...query, completed: done, dueDate_lte: valueDate });
+            }
+            if (task === "noDone") {
+              setQuery({ ...query, completed: done, dueDate_gte: valueDate, dueDate_lte: false });
+            }
+             if (task === "done") {
+              setQuery({ ...query, completed: done, dueDate_gte: false, dueDate_lte: false });
+            }
           }}
-        />
-      </ConfigProvider>
+        >
+          <option value={`quaHan false`}>Quá hạn</option>
+          <option value={"done true"}>Hoàn thành</option>
+          <option value={"noDone false"}>Chưa hoàn thành</option>
+        </select>
+      </Space>
+      <Table
+        rowKey={(record) => record._id}
+        dataSource={products}
+        columns={columns}
+        // pagination={{
+        //   current: query._page,
+        //   pageSize: query._limit,
+        //   total: meta?.total,
+        //   onChange: (page, pageSize) => {
+        //     setQuery({ ...query, _page: page, _limit: pageSize });
+        //   },
+        //   showQuickJumper: true,
+        //   showSizeChanger: true,
+        // }}
+      />
+      <PagiNation meta={meta} query={query} setQuery={setQuery} />
     </div>
   );
 };

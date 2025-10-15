@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { fetchData } from "../axios/ListProducts";
 import { handleCompleted, handlePriority } from "../ultils/handlePriority";
-import { Pagination, Select, Space, Table } from "antd";
+import { Input, Pagination, Select, Space, Table } from "antd";
 import PagiNation from "../components/PagiNation";
-import Search from "antd/es/transfer/search";
 
 const ImportantTodos = () => {
-  const [searchValue,setSearchValue] = useState("")
+  const [searchValue, setSearchValue] = useState("");
   const [products, setProducts] = useState(null);
   const [query, setQuery] = useState({
     _page: 1,
     _limit: 10,
+    priority: 3,
   });
 
   useEffect(() => {
@@ -50,11 +50,11 @@ const ImportantTodos = () => {
       key: "dueDate",
     },
   ];
-
+  console.log(new Date().toLocaleString())
   return (
     <div>
       <Space wrap style={{ marginBottom: 20 }}>
-        <Search
+        <Input.Search
           placeholder="Vui lòng nhập..."
           onChange={(e) => {
             setSearchValue(e.target.value);
@@ -62,19 +62,6 @@ const ImportantTodos = () => {
           onSearch={() => setQuery({ ...query, q: searchValue })}
           enterButton
           style={{ width: 300 }}
-        />
-        <Select
-          defaultValue="id desc"
-          style={{ width: 120 }}
-          onChange={(e) => {
-            const [sort, order] = e.split(" ");
-            setQuery({ ...query, _sort: sort, _order: order });
-          }}
-          options={[
-            { value: "id desc", label: "Mặc định" },
-            { value: "priority desc", label: "Priority(Giảm dần)" },
-            { value: "priority asc", label: "Priority(Tăng dần)" },
-          ]}
         />
       </Space>
       <Table
