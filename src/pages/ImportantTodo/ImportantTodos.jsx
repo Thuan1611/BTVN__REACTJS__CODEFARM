@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { fetchData } from "../axios/ListProducts";
-import { handleCompleted, handlePriority } from "../ultils/handlePriority";
 import { Input, Pagination, Select, Space, Table } from "antd";
-import PagiNation from "../components/PagiNation";
+import { fetchData } from "../../axios/ListProducts";
+import { handleCompleted, handlePriority } from "../../ultils/handlePriority";
 
 const ImportantTodos = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -50,7 +49,7 @@ const ImportantTodos = () => {
       key: "dueDate",
     },
   ];
-  console.log(new Date().toLocaleString())
+  console.log(new Date().toLocaleString());
   return (
     <div>
       <Space wrap style={{ marginBottom: 20 }}>

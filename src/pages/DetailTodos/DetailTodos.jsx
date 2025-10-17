@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { fetchDataDetail } from "../axios/ListProducts";
+import { fetchDataDetail } from "../../axios/ListProducts";
 import { Link, useParams } from "react-router-dom";
 import { Card } from "antd";
-import { handleCompleted, handlePriority } from "../ultils/handlePriority";
+import { handleCompleted, handlePriority } from "../../ultils/handlePriority";
 
 const DetailTodos = () => {
   const { id } = useParams();
   const [products, setProduct] = useState(null);
-
+  console.log(id);
   useEffect(() => {
     const loadData = async () => {
       const { data } = await fetchDataDetail(id);
