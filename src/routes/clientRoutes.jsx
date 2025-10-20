@@ -5,11 +5,12 @@ import FormTodos from "../pages/FormTodos/FormTodos";
 import DetailTodos from "../pages/DetailTodos/DetailTodos";
 import ImportantTodos from "../pages/ImportantTodo/ImportantTodos";
 import TodosList from "../pages/TodosList/TodosList";
+import LayoutClient from "../layouts/LayoutClient";
 
 const clientRoutes = [
   {
     path: "/",
-    Component: ClientLayout,
+    Component: LayoutClient,
     children: [
       { index: true, element: <Navigate to="todos" /> },
       { path: "todos", Component: TodosList },

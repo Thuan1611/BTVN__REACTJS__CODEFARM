@@ -57,7 +57,9 @@ const TodosList = () => {
       title: "Actions",
       render: (_, record) => (
         <Space>
-          <Button type="primary"> <Link to={`/form/${record._id}`}>Sửa</Link></Button>
+          <Button type="primary">
+            <Link to={`/form/${record._id}`}>Sửa</Link>
+          </Button>
           <Button
             type="primary"
             danger
