@@ -10,7 +10,7 @@ const authRoutes = [
     path: "/",
     Component: LayoutAdmin,
     children: [
-      { index: true, element: <Navigate to="register" /> },
+      { index: true, element: <Navigate to="login" /> },
       { path: "register", Component: RegisterTodos },
       { path: "login", Component: LoginTodos },
 

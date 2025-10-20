@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { loginSchema } from "../schema/authSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,22 +7,28 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 
 const LoginTodos = () => {
+  const [saveData, setSaveData] = useState(false);
   const navi = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(loginSchema) });
+
   const onSubmit = async (data) => {
     try {
       await login(data);
+      if (saveData) {
+        localStorage.setItem("data", JSON.stringify(data));
+      } else {
+        sessionStorage.setItem("data", JSON.stringify(data));
+      }
       toast("Đăng nhập thành công");
       navi("/todos");
     } catch (error) {
-      console.log(error);
+      toast(`${error}`);
     }
   };
-  const handleChange = () => {};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
@@ -70,7 +76,7 @@ const LoginTodos = () => {
               type="checkbox"
               id="agreeItems"
               className="mt-1 w-4 h-4 accent-pink-500 focus:ring-pink-400 cursor-pointer"
-              onChange={(e) => handleChange(e)}
+              onChange={(e) => setSaveData(e.target.checked)}
             />
             <label
               htmlFor="agreeItems"
@@ -87,6 +93,12 @@ const LoginTodos = () => {
           >
             Đăng nhập
           </button>
+          <p className="text-center text-sm mt-4 text-white/70">
+            Chưa có tài khoản?{" "}
+            <Link to={`/register`} className="text-pink-300 hover:underline">
+              Đăng ký ngay
+            </Link>
+          </p>
         </form>
       </div>
     </div>

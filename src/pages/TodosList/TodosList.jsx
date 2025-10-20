@@ -144,6 +144,9 @@ const TodosList = () => {
               { value: "noDone false ", label: "Chưa hoàn thành" },
             ]}
           ></Select>
+          <Button onClick={() => setQuery({ _page: 1, _limit: 10 })}>
+            Reset
+          </Button>
         </Space>
         <Button style={{ backgroundColor: "green", color: "white" }}>
           <Link to="/form">Thêm công việc</Link>

@@ -12,7 +12,6 @@ const clientRoutes = [
     path: "/",
     Component: LayoutClient,
     children: [
-      { index: true, element: <Navigate to="todos" /> },
       { path: "todos", Component: TodosList },
       { path: "form/:id", Component: FormTodos },
       { path: "form", Component: FormTodos },
