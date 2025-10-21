@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "https://api-class-o1lo.onrender.com/api/v1";
+const url = "https://api-class-o1lo.onrender.com/api/thuannh/";
 const api = axios.create({
   headers: {
     "Content-Type": "application/json",

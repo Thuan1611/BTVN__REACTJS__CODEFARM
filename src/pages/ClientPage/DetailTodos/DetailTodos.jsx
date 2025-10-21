@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { fetchDataDetail } from "../../axios/ListProducts";
 import { Link, useParams } from "react-router-dom";
 import { Card } from "antd";
-import { handleCompleted, handlePriority } from "../../ultils/handlePriority";
+import { fetchDataDetail } from "../../../axios/ListProducts";
+import { handleCompleted, handlePriority } from "../../../ultils/handlePriority";
 
 const DetailTodos = () => {
   const { id } = useParams();
   const [products, setProduct] = useState(null);
-  console.log(id);
   useEffect(() => {
     const loadData = async () => {
       const { data } = await fetchDataDetail(id);
@@ -15,7 +14,7 @@ const DetailTodos = () => {
     };
     loadData();
   }, [id]);
-
+  console.log(products)
   return (
     <div className=" min-h-screen bg-gray-100">
       <Card
@@ -48,12 +47,12 @@ const DetailTodos = () => {
           </p>
           <p>
             <span className="font-semibold text-gray-800">Trạng thái: </span>
-            {handleCompleted(products?.completed)}
+            {handleCompleted(products)}
           </p>
         </div>
       </Card>
       <div className="py-6 ">
-        <Link to="/" className=" px-6 py-4 button-primary ">
+        <Link to="/todos" className=" px-6 py-4 button-primary ">
           Trở về danh sách
         </Link>
       </div>

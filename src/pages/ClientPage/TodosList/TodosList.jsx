@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { deleteData, fetchData } from "../../axios/ListProducts";
+import { deleteData, fetchData } from "../../../axios/ListProducts";
 import { Space, Table, Input, Button, ConfigProvider, Select } from "antd";
-import { handleCompleted, handlePriority } from "../../ultils/handlePriority";
+import { handleCompleted, handlePriority } from "../../../ultils/handlePriority";
 import { Link } from "react-router-dom";
-import PagiNation from "../../components/PagiNation";
+import PagiNation from "../../../components/PagiNation";
 const { Search } = Input;
 const TodosList = () => {
   const [products, setProducts] = useState([]);
@@ -21,8 +21,7 @@ const TodosList = () => {
   useEffect(() => {
     loadData();
   }, [query]);
-
-  const columns = [
+    const columns = [
     {
       title: "Index",
       render: (_, __, index) => index + 1,
@@ -64,9 +63,7 @@ const TodosList = () => {
             type="primary"
             danger
             onClick={() => {
-              if (confirm("Are you sure")) {
                 deleteData(record._id);
-              }
               loadData();
             }}
           >

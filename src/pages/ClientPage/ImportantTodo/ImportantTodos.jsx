@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Input, Pagination, Select, Space, Table } from "antd";
-import { fetchData } from "../../axios/ListProducts";
-import { handleCompleted, handlePriority } from "../../ultils/handlePriority";
+import { fetchData } from "../../../axios/ListProducts";
+import { handleCompleted, handlePriority } from "../../../ultils/handlePriority";
 
 const ImportantTodos = () => {
   const [searchValue, setSearchValue] = useState("");

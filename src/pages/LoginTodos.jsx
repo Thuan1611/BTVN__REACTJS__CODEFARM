@@ -18,15 +18,13 @@ const LoginTodos = () => {
   const onSubmit = async (data) => {
     try {
       await login(data);
-      if (saveData) {
-        localStorage.setItem("data", JSON.stringify(data));
-      } else {
-        sessionStorage.setItem("data", JSON.stringify(data));
-      }
+      saveData
+        ? localStorage.setItem("data", JSON.stringify(data))
+        : sessionStorage.setItem("data", JSON.stringify(data));
       toast("Đăng nhập thành công");
       navi("/todos");
-    } catch (error) {
-      toast(`${error}`);
+    } catch (errors) {
+      toast.error(errors.response?.data.message);
     }
   };
 

@@ -1,6 +1,5 @@
 import api from "./api";
 
-const url = "https://api-class-o1lo.onrender.com/api/v1/todos";
 export const fetchData = async (query) => {
   const cleanUpParams = Object.entries(query)
     .filter(([key, value]) => {
@@ -9,20 +8,20 @@ export const fetchData = async (query) => {
     })
     .map(([key, value]) => `${key}=${value}`)
     .join("&");
-  const { data } = await api.get(`${url}?${cleanUpParams}`);
+  const { data } = await api.get(`products?${cleanUpParams}`);
   return data;
 };
 
 export const fetchDataDetail = async (id) => {
-  const { data } = await api.get(`${url}/${id}`);
+  const { data } = await api.get(`products/${id}`);
   return data;
 };
 export const createData = async (body) => {
- return await api.post(`${url}`, body);
+  return await api.post("products", body);
 };
 export const deleteData = async (id) => {
- return await api.delete(`${url}/${id}`);
+  return await api.delete(`products/${id}`);
 };
-export const updateData = async (id,body) => {
- return await api.put(`${url}/${id}`,body);
+export const updateData = async (id, body) => {
+  return await api.put(`products/${id}`, body);
 };

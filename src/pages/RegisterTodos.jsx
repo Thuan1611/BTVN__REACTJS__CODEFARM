@@ -17,20 +17,17 @@ const RegisterTodos = () => {
   const onSubmit = async (data) => {
     try {
       setDisable(true);
-      delete data.confirmPassword
+      delete data.confirmPassword;
       await registerTodos(data);
-      toast("Thêm thành công");
+      toast.success("Thêm thành công");
+      setDisable(false)
       navi("/login");
     } catch (error) {
-      console.log(error);
+      setDisable(false)
+      toast.error(error.response?.data.message);
     }
   };
 
-  const handleChange = (e) => {
-    const isChecked = !e.target.checked;
-    console.log(isChecked);
-    setDisable(isChecked);
-  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
       <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-full max-w-md text-white border border-white/20">
@@ -113,7 +110,7 @@ const RegisterTodos = () => {
               type="checkbox"
               id="agreeItems"
               className="mt-1 w-4 h-4 accent-pink-500 focus:ring-pink-400 cursor-pointer"
-              onChange={(e) => handleChange(e)}
+              onChange={(e) => setDisable(!e.target.checked)}
             />
             <label
               htmlFor="agreeItems"

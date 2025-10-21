@@ -1,11 +1,12 @@
 import { Component } from "react";
 import ClientLayout from "../layouts/LayoutClient";
 import { Navigate } from "react-router-dom";
-import FormTodos from "../pages/FormTodos/FormTodos";
-import DetailTodos from "../pages/DetailTodos/DetailTodos";
-import ImportantTodos from "../pages/ImportantTodo/ImportantTodos";
-import TodosList from "../pages/TodosList/TodosList";
 import LayoutClient from "../layouts/LayoutClient";
+import FormTodos from "../pages/ClientPage/FormTodos/FormTodos";
+import DetailTodos from "../pages/ClientPage/DetailTodos/DetailTodos";
+import ImportantTodos from "../pages/ClientPage/ImportantTodo/ImportantTodos";
+import TodosList from "../pages/ClientPage/TodosList/TodosList"
+
 
 const clientRoutes = [
   {

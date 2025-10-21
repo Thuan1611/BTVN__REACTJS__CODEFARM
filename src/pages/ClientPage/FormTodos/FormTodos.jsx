@@ -5,9 +5,9 @@ import {
   createData,
   fetchDataDetail,
   updateData,
-} from "../../axios/ListProducts";
+} from "../../../axios/ListProducts";
 import "./FormTodos.css";
-import { ProductSchema } from "../../schema/ProductSchema";
+import { ProductSchema } from "../../../schema/ProductSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const FormTodos = () => {
