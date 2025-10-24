@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const LoginTodos = () => {
   const [saveData, setSaveData] = useState(false);
+  const [disable, setDisable] = useState(false);
   const navi = useNavigate();
   const {
     register,
@@ -17,12 +18,18 @@ const LoginTodos = () => {
 
   const onSubmit = async (data) => {
     try {
-      await login(data);
-      saveData
-        ? localStorage.setItem("data", JSON.stringify(data))
-        : sessionStorage.setItem("data", JSON.stringify(data));
+      setDisable(true);
+      const { data: response } = await login(data);
+      if (saveData) {
+        localStorage.setItem("data", JSON.stringify(response.user));
+        localStorage.setItem("accessToken", response.accessToken);
+      } else {
+        sessionStorage.setItem("data", JSON.stringify(response.user));
+        sessionStorage.setItem("accessToken", response.accessToken);
+      }
       toast("Đăng nhập thành công");
       navi("/todos");
+      setDisable(false);
     } catch (errors) {
       toast.error(errors.response?.data.message);
     }
@@ -88,6 +95,7 @@ const LoginTodos = () => {
           <button
             type="submit"
             className="w-full py-3 rounded-lg bg-gradient-to-r from-pink-500 to-purple-500 hover:from-purple-500 hover:to-pink-500 font-semibold text-white shadow-lg transition duration-300"
+            disabled={disable}
           >
             Đăng nhập
           </button>

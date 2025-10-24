@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { deleteData, fetchData } from "../../../axios/ListProducts";
-import { Space, Table, Input, Button, ConfigProvider, Select } from "antd";
-import { handleCompleted, handlePriority } from "../../../ultils/handlePriority";
-import { Link } from "react-router-dom";
+import { Space, Table, Input, Button, Select } from "antd";
+import {
+  handleCompleted,
+  handlePriority,
+} from "../../../ultils/handlePriority";
+import { Link, useNavigate } from "react-router-dom";
 import PagiNation from "../../../components/PagiNation";
+import Statistics from "../../../components/Statistics";
 const { Search } = Input;
 const TodosList = () => {
+  const nav = useNavigate();
   const [products, setProducts] = useState([]);
   const [meta, setMeta] = useState(null);
   const [searchValue, setSearchValue] = useState("");
@@ -21,7 +26,7 @@ const TodosList = () => {
   useEffect(() => {
     loadData();
   }, [query]);
-    const columns = [
+  const columns = [
     {
       title: "Index",
       render: (_, __, index) => index + 1,
@@ -63,7 +68,7 @@ const TodosList = () => {
             type="primary"
             danger
             onClick={() => {
-                deleteData(record._id);
+              deleteData(record._id);
               loadData();
             }}
           >
@@ -76,6 +81,17 @@ const TodosList = () => {
       ),
     },
   ];
+  //Đăng xuất
+  const logOut = () => {
+    const token =
+      localStorage.getItem("accessToken") ||
+      sessionStorage.getItem("accessToken");
+    if (token) {
+      localStorage.clear();
+      sessionStorage.clear();
+    }
+    nav("/login");
+  };
 
   //Lọc trạng thái
   const handleCompletedTask = (e) => {
@@ -93,6 +109,8 @@ const TodosList = () => {
 
   return (
     <div>
+      {/* Thống kê */}
+      <Statistics />
       <Space
         wrap
         style={{
@@ -145,8 +163,17 @@ const TodosList = () => {
             Reset
           </Button>
         </Space>
-        <Button style={{ backgroundColor: "green", color: "white" }}>
-          <Link to="/form">Thêm công việc</Link>
+        <Button
+          style={{ backgroundColor: "green", color: "white" }}
+          onClick={() => logOut()}
+        >
+          Đăng xuất
+        </Button>
+        <Button
+          type="text"
+          className={` !bg-gradient-to-r !from-pink-500 !to-purple-600 !text-white font-semibold px-6 py-2 rounded-full shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 `}
+        >
+          Thêm công việc
         </Button>
       </Space>
 

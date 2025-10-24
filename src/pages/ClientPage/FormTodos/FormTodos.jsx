@@ -109,6 +109,8 @@ const FormTodos = () => {
                 </p>
               )}
             </div>
+
+            
             {id && (
               <div className="mb-6 flex items-center gap-2">
                 <input type="checkbox" {...register("completed")} />

@@ -5,15 +5,20 @@ import RegisterTodos from "../pages/RegisterTodos";
 import LoginTodos from "../pages/LoginTodos";
 import LayoutAdmin from "../layouts/LayoutAdmin";
 
+import AuthProtected from "../routes/protected/AuthProtected";
+
 const authRoutes = [
   {
     path: "/",
-    Component: LayoutAdmin,
+    element : (
+      <AuthProtected>
+        <LayoutAdmin />
+      </AuthProtected>
+    ),
     children: [
-      { index: true, element: <Navigate to="login" /> },
+      { index: true, element: <Navigate to="/todos" /> },
       { path: "register", Component: RegisterTodos },
       { path: "login", Component: LoginTodos },
-
     ],
   },
 ];
