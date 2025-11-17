@@ -1,9 +1,10 @@
-import FormTodos from "../pages/ClientPage/FormTodos/FormTodos";
-import DetailTodos from "../pages/ClientPage/DetailTodos/DetailTodos";
+
 import ImportantTodos from "../pages/ClientPage/ImportantTodo/ImportantTodos";
 import TodosList from "../pages/ClientPage/TodosList/TodosList";
 import LayoutClient from "../layouts/LayoutClient";
-import PrivateRoutes from "../routes/protected/PivateRoutes";
+import PrivateRoutes from "./protected/PivateRoutes";
+import DetailTodos from "../pages/ClientPage/DetailTodos/DetailTodos";
+import FormTodos from "../pages/ClientPage/FormTodos/FormTodos";
 
 const clientRoutes = [
   {

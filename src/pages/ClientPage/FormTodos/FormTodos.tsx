@@ -1,45 +1,73 @@
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
+import "./FormTodos.css";
+
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   createData,
   fetchDataDetail,
   updateData,
 } from "../../../axios/ListProducts";
-import "./FormTodos.css";
+import { useAppDispatch } from "../../../hooks/hooks";
+import { addTodos, updateTodos } from "../../../store/features/todosSlice";
+import { toast } from "react-toastify";
 import { ProductSchema } from "../../../schema/ProductSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 const FormTodos = () => {
   const navi = useNavigate();
   const { id } = useParams();
+  const dispatch = useAppDispatch();
+  interface FormInput {
+    _id: string | number;
+    name: string;
+    priority: number;
+    dueDate: Date;
+    completed: boolean;
+    description: string;
+  }
   const {
     register,
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(ProductSchema) });
-  //Render Chi tiết sản phẩm
+  } = useForm<FormInput>({
+    resolver: zodResolver(ProductSchema),
+  });
+  // Render Chi tiết sản phẩm
   useEffect(() => {
     if (id) {
       const loadData = async () => {
         const { data } = await fetchDataDetail(id);
-        const formattedDate = data?.dueDate ? data.dueDate.slice(0, 10) : "";
-        reset({ ...data, dueDate: formattedDate });
+        reset({
+          ...data,
+          dueDate: data.dueDate?.slice(0, 10),
+        });
       };
       loadData();
     }
   }, [id, reset]);
 
   //SUBMIT: THÊM HOẶC SỬA
-  const onSubmit = async (data) => {
+  const onSubmit: SubmitHandler<FormInput> = async (data) => {
     try {
+      const payload = {
+        ...data,
+        dueDate: data.dueDate.toISOString(),
+        completed: data.completed ?? false,
+      };
       if (!id) {
-        const respone = { ...data, completed: false };
-        await createData(respone);
+        console.log("CREATE:", payload);
+        await createData(payload);
+        dispatch(addTodos(payload));
+        toast.success("Thêm thành công");
       } else {
-        await updateData(id, data);
+        console.log("UPDATE:", payload);
+        await updateData(id, payload);
+        dispatch(updateTodos(payload));
+        toast.success("Sửa thành công");
       }
+
       navi("/");
     } catch (error) {
       console.log(error);
@@ -76,21 +104,18 @@ const FormTodos = () => {
               )}
             </div>
 
-            {/* Mức độ ưu tiên */}
             <div className="form-group">
               <label className="form-label">🎯 Mức Độ Ưu Tiên</label>
               <select
-                {...register("priority")}
+                {...register("priority", { valueAsNumber: true })}
                 defaultValue={1}
                 className="form-select"
               >
-                <option value="1">🟢 Thấp</option>
-                <option value="2">🟡 Trung bình</option>
-                <option value="3">🔴 Cao</option>
+                <option value={1}>🟢 Thấp</option>
+                <option value={2}>🟡 Trung bình</option>
+                <option value={3}>🔴 Cao</option>
               </select>
             </div>
-            {console.log(errors)}
-            {/* Ngày hết hạn */}
             <div className="form-group">
               <label className="form-label">
                 📅 Ngày Hết Hạn <span className="required">*</span>
@@ -110,7 +135,6 @@ const FormTodos = () => {
               )}
             </div>
 
-            
             {id && (
               <div className="mb-6 flex items-center gap-2">
                 <input type="checkbox" {...register("completed")} />

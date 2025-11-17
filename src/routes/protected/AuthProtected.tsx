@@ -1,7 +1,7 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
-const AuthProtected = ({ children }) => {
+const AuthProtected = ({ children }:{children: ReactNode}) => {
   const token =
     localStorage.getItem("accessToken") ||
     sessionStorage.getItem("accessToken");

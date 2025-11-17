@@ -1,22 +1,27 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { loginSchema } from "../schema/authSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { login } from "../axios/authTodos";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import { ITodos } from "../types/ITodos";
 
 const LoginTodos = () => {
   const [saveData, setSaveData] = useState(false);
   const [disable, setDisable] = useState(false);
   const navi = useNavigate();
+  interface IFormInput {
+    email: string;
+    password: string;
+  }
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(loginSchema) });
+  } = useForm<IFormInput>({ resolver: zodResolver(loginSchema) });
 
-  const onSubmit = async (data) => {
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
       setDisable(true);
       const { data: response } = await login(data);

@@ -1,8 +1,9 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/SideBar";
-import Statistics from "../components/Statistics";  
 import { Card } from "antd";
+import Headers from "../components/Headers";
+import Statistics from "../components/Statistics";
 
 const LayoutClient = () => {
   return (
@@ -14,7 +15,10 @@ const LayoutClient = () => {
 
       {/* Nội dung chính */}
       <div className="flex-grow bg-gray-100 p-6">
-       
+        <Headers />
+
+        {/* Thống kê */}
+        <Statistics />
         <Outlet />
       </div>
     </div>

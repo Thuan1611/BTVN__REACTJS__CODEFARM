@@ -1,11 +1,10 @@
 import { Component } from "react";
 import ClientLayout from "../layouts/LayoutClient";
 import { Navigate } from "react-router-dom";
-import RegisterTodos from "../pages/RegisterTodos";
 import LoginTodos from "../pages/LoginTodos";
 import LayoutAdmin from "../layouts/LayoutAdmin";
-
-import AuthProtected from "../routes/protected/AuthProtected";
+import AuthProtected from "./protected/AuthProtected";
+import RegisterTodos from "../pages/RegisterTodos";
 
 const authRoutes = [
   {

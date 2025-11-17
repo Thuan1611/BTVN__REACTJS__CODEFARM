@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Card } from "antd";
+
 import { fetchDataDetail } from "../../../axios/ListProducts";
-import { handleCompleted, handlePriority } from "../../../ultils/handlePriority";
+import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
+import { detailTodo } from "../../../store/features/todosSlice";
+import {
+  handleCompleted,
+  handlePriority,
+} from "../../../ultils/handlePriority";
 
 const DetailTodos = () => {
   const { id } = useParams();
-  const [products, setProduct] = useState(null);
+  const dispatch = useAppDispatch();
+  const { todos, todo } = useAppSelector((state) => state.todos);
   useEffect(() => {
     const loadData = async () => {
-      const { data } = await fetchDataDetail(id);
-      setProduct(data);
+      const { data } = await fetchDataDetail(String(id));
+      dispatch(detailTodo(data));
     };
     loadData();
   }, [id]);
-  console.log(products)
   return (
     <div className=" min-h-screen bg-gray-100">
       <Card
@@ -33,21 +39,21 @@ const DetailTodos = () => {
         <div className="space-y-3 text-gray-700">
           <p>
             <span className="font-semibold text-gray-800">Tên: </span>
-            {products?.name}
+            {todo?.name}
           </p>
           <p>
             <span className="font-semibold text-gray-800">Mô tả: </span>
-            {products?.description}
+            {todo?.description}
           </p>
           <p>
             <span className="font-semibold text-gray-800">Độ ưu tiên: </span>
             <span className="text-blue-600">
-              {handlePriority(products?.priority)}
+              {handlePriority(todos.priority)}
             </span>
           </p>
           <p>
             <span className="font-semibold text-gray-800">Trạng thái: </span>
-            {handleCompleted(products)}
+            {handleCompleted(todo)}
           </p>
         </div>
       </Card>
